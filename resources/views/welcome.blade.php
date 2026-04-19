@@ -24,11 +24,12 @@
     </head>
     <body class="bg-[#ffffff] dark:bg-[#0a0a0a] text-[#1b1b18] flex flex-col min-h-screen m-0 p-0">
      
-    <header class="w-full flex items-center justify-between flex-wrap gap-4 px-4 py-3 text-sm">
-    <div class="flex items-center gap-3">
-    <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto block dark:hidden">
-    <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto hidden dark:block">
-</div>
+    <header class="w-full flex items-center justify-between flex-wrap gap-4 px-8 text-sm">
+    <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-logo /> {{-- теперь это два img с адаптацией под тему --}}
+                    </a>
+                </div>
 
     <div class="flex gap-10">
         <a href="" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Викторины</a>

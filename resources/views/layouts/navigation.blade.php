@@ -7,16 +7,16 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo />
+                        <x-application-logo /> {{-- теперь это два img с адаптацией под тему --}}
                     </a>
                 </div>
 
-                <!-- Desktop Navigation Links (hidden on mobile) -->
-                <div class="hidden sm:flex  sm:ms-80 space-x-8">
+                <!-- Desktop Navigation Links -->
+                <div class="hidden sm:flex ml-[560px]">
                     <a href="" class="text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
                         Викторины
                     </a>
-                    <a href="" class="text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
+                    <a href="" class=" ml-[40px] text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
                         Рейтинги
                     </a>
                 </div>
