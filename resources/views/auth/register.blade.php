@@ -1,3 +1,13 @@
+<header class="w-full flex items-center justify-between flex-wrap gap-4 px-4 py-3 text-sm">
+    <div class="flex items-center gap-3">
+    <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto block">
+</div>
+
+    <div class="flex gap-10">
+        <a href="" class="text-[20px] text-[#000000] hover:text-[#E84400] transition hover:underline">Викторины</a>
+        <a href="" class="text-[20px] text-[#000000] hover:text-[#E84400] transition hover:underline">Рейтинги</a>
+    </div>
+</header>
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf

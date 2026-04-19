@@ -1,4 +1,15 @@
+<header class="w-full flex items-center justify-between flex-wrap gap-4 px-4 py-3 text-sm">
+    <div class="flex items-center gap-3">
+    <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto block">
+</div>
+
+    <div class="flex gap-10">
+        <a href="" class="text-[20px] text-[#000000] hover:text-[#E84400] transition hover:underline">Викторины</a>
+        <a href="" class="text-[20px] text-[#000000] hover:text-[#E84400] transition hover:underline">Рейтинги</a>
+    </div>
+</header>
 <x-guest-layout>
+    
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -27,7 +38,7 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <input id="remember_me" type="checkbox" class="rounded border-[gray-300] text-[#E84400] shadow-sm focus:ring-[#E84400]" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
