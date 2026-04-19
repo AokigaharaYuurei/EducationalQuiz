@@ -6,7 +6,7 @@ use App\Http\Middleware\Admin;
 
 Route::get('/', function () {
     return view('welcome')->with('success', 'User created successfully!');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
