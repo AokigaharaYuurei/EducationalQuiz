@@ -8,11 +8,18 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all(); 
-        return view('admin.users', compact('users'));
-    }
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+    
+    $users = User::when($search, function ($query, $search) {
+        return $query->where('name', 'like', "%{$search}%")
+                     ->orWhere('middlename', 'like', "%{$search}%")
+                     ->orWhere('lastname', 'like', "%{$search}%");
+    })->get(); 
+    
+    return view('admin.users', compact('users', 'search'));
+}
 
     public function destroy(User $user)
     {

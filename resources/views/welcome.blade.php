@@ -55,7 +55,22 @@
                 <div class="bg-[#E7E9EF] rounded-3xl w-[1400px] ">
                     <p class=" text-[52px] text-[#303030] font-bold mt-[42px] ml-[44px]">Добро пожаловать в <br> образовательную викторину!</p>
                     <p class="text-[36px] text-[#303030] font-semibold mt-[21px] ml-[44px]">Интерактивная платформа для <br> <span class="text-[#F7733C]">проверки знаний</span> по <br>различным предметам.</p>
-                    <button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">Выбрать викторину</button>   
+                    @auth
+    @if(auth()->user()->role === 'admin')
+        <a href="{{ route('admin.index') }}" 
+           class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937] inline-flex items-center justify-center">
+            Панель администратора
+        </a>
+    @else
+        <button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+            Выбрать викторину
+        </button>
+    @endif
+@else
+    <button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+        Выбрать викторину
+    </button>
+@endauth
                 </div>
                 <div class="absolute ml-[550px] mt-[40px]">
                     <img src="{{asset('img/point.png')}}" alt="">
