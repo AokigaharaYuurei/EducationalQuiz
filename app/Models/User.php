@@ -24,6 +24,7 @@ class User extends Authenticatable
         'login',
         'tel',
         'email',
+        'role',
         'password',
     ];
     const ADMIN_ROLE = 'admin';
