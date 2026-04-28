@@ -27,12 +27,12 @@
     <header class="w-full flex items-center justify-between flex-wrap gap-4 px-8 text-sm">
     <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo /> {{-- теперь это два img с адаптацией под тему --}}
+                        <x-application-logo /> 
                     </a>
                 </div>
 
     <div class="flex gap-10">
-        <a href="" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Викторины</a>
+        <a href="{{route('student.index')}}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Викторины</a>
         <a href="" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Рейтинги</a>
     </div>
 
@@ -62,14 +62,14 @@
             Панель администратора
         </a>
     @else
-        <button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+        <a href="{{ route('admin.index') }}"><button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
             Выбрать викторину
-        </button>
+        </button></a>
     @endif
 @else
-    <button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+    <a href="{{ route('admin.index') }}"><button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
         Выбрать викторину
-    </button>
+    </button></a>
 @endauth
                 </div>
                 <div class="absolute ml-[550px] mt-[40px]">

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
@@ -17,7 +18,7 @@ Route::get('/dashboard', function () {
     if (auth()->user()?->role === 'admin') {
         return redirect()->route('admin.index');
     }
-    return redirect()->route('student.index'); 
+    return redirect()->route('student.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -25,11 +26,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+    Route::get('/quiz/{subjectId}', [QuizController::class, 'start'])->name('quiz.start');
+    Route::post('/quiz/{subjectId}', [QuizController::class, 'submit'])->name('quiz.submit');
+    Route::get('/quiz/result/{attemptId}', [QuizController::class, 'result'])->name('quiz.result');
 });
-Route::middleware((Admin::class))->group(function(){
-    Route::get('/admin', function (){
-        return view('admin.index');
-    }
+Route::middleware((Admin::class))->group(function () {
+    Route::get(
+        '/admin',
+        function () {
+            return view('admin.index');
+        }
     )->name('admin.index');
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
@@ -47,4 +53,4 @@ Route::middleware((Admin::class))->group(function(){
     Route::delete('/admin/questions/{question}', [QuestionController::class, 'destroy'])->name('admin.questions.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
