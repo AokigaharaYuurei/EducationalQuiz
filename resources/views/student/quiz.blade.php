@@ -48,30 +48,30 @@
     </div>
 
     <div class="dark:bg-[#E7E9EF] bg-[#2A2A2A] w-full">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
-        <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
-        <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
+            <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
+            <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
 
-        <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-            Выбрать викторину
-        </a>
-        <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-            Рейтинги
-        </a>
+            <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Выбрать викторину
+            </a>
+            <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Рейтинги
+            </a>
+        </div>
+        <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
+            © 2025 Образовательная викторина. Все права защищены
+        </p>
     </div>
-    <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
-        © 2025 Образовательная викторина. Все права защищены
-    </p>
-</div>
 
     <script>
         const questions = @json($questions);
         const scale = [10, 20, 50, 100, 200, 500, 1000, 2000];
-        const totalQuestions = scale.length; 
-        let currentStep = 0;    
+        const totalQuestions = questions.length;
+        let currentStep = 0;
         let userAnswers = new Array(totalQuestions).fill(null);
         let timerInterval = null;
-        let timeLeft = 30;
+        let timeLeft = 40;
         let gameActive = true;
 
         const currentQuestionDiv = document.getElementById('current-question');
@@ -149,7 +149,7 @@
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
             if (!gameActive) return;
-            timeLeft = 30;
+            timeLeft = 40;
             updateTimerDisplay();
             timerInterval = setInterval(() => {
                 if (!gameActive) return;
@@ -174,7 +174,7 @@
             questionArea.classList.add('hidden');
             scaleScreen.classList.remove('hidden');
             earnedPointsSpan.textContent = scale[currentStep];
-            renderVerticalScale(currentStep); 
+            renderVerticalScale(currentStep);
         }
 
         function proceedToNextQuestion() {
@@ -215,7 +215,11 @@
             const currentQ = questions[currentStep];
             const correctId = currentQ.answers.find(a => a.is_correct)?.id;
             if (selectedId === correctId) {
-                showScaleScreen();
+                if (currentStep === totalQuestions - 1) {
+                    finishQuiz();
+                } else {
+                    showScaleScreen();
+                }
                 return true;
             } else {
                 handleGameOver();

@@ -39,14 +39,20 @@
     @if (Route::has('login'))
         <div class="flex items-center gap-2">
             @auth
-                <a href="{{ url('/dashboard') }}" class="px-4 py-1.5 border rounded-sm hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b] transition">
-                    Dashboard
-                </a>
-            @else
-                <a href="{{ route('login') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Вход</a>
-                <span class="text-[#000000] dark:text-[#EDEDEC]">|</span>
-                <a href="{{ route('register') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Регистрация</a>
-            @endauth
+    @if(auth()->user()->role === 'admin')
+        <a href="{{ route('admin.index') }}" class="px-4 py-1.5 dark:text-[#fff] hover:text-[#747474] transition">
+            Панель администратора
+        </a>
+    @else
+        <a href="{{ route('student.index') }}" class="px-4 py-1.5  dark:text-[#fff] hover:text-[#747474] transition">
+            Страница ученика
+        </a>
+    @endif
+@else
+    <a href="{{ route('login') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Вход</a>
+    <span class="text-[#000000] dark:text-[#EDEDEC]">|</span>
+    <a href="{{ route('register') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Регистрация</a>
+@endauth
         </div>
     @endif
 </header>

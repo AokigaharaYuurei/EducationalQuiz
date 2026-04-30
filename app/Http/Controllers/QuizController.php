@@ -9,7 +9,6 @@ use App\Models\QuizAttempt;
 
 class QuizController extends Controller
 {
-
     public function start($subjectId)
     {
         $subject = Subject::findOrFail($subjectId);
@@ -66,11 +65,11 @@ class QuizController extends Controller
             'score' => $score,
             'total_points' => $totalPoints,
             'percentage' => $percentage,
-            'answers_data' => json_encode($answersData),
+            'answers_data' => json_encode($answersData, JSON_UNESCAPED_UNICODE),
         ]);
 
         return redirect()->route('quiz.result', $attempt->id)
-            ->with('success', 'Викторина завершена!');
+                         ->with('success', 'Викторина завершена!');
     }
 
     public function result($attemptId)

@@ -14,7 +14,7 @@ use App\Http\Controllers\RatingController;
 use App\Models\Subject;
 
 Route::get('/', function () {
-    $subjects = Subject::all(); 
+    $subjects = Subject::all();
     return view('welcome', compact('subjects'));
 })->name('welcome');
 
@@ -57,7 +57,7 @@ Route::middleware((Admin::class))->group(function () {
     Route::put('/admin/questions/{question}', [QuestionController::class, 'update'])->name('admin.questions.update');
     Route::delete('/admin/questions/{question}', [QuestionController::class, 'destroy'])->name('admin.questions.destroy');
     Route::get('/admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
-Route::get('/admin/statistics/export', [StatisticsController::class, 'export'])->name('admin.statistics.export');
+    Route::get('/admin/statistics/export', [StatisticsController::class, 'export'])->name('admin.statistics.export');
 });
 
 require __DIR__ . '/auth.php';
