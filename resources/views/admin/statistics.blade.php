@@ -1,6 +1,9 @@
 <x-app-layout>
     <div class="py-12">
-        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition">← Административная панель</a>
+        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition"> 
+            <span class="hidden sm:inline">←Панель администратора</span>
+            <span class="sm:hidden">←Админ-панель</span>
+        </a>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">

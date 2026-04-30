@@ -1,6 +1,9 @@
 <x-app-layout>
     <div class="mt-[50px] px-4">
-        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition">← Административная панель</a>
+        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition"> 
+            <span class="hidden sm:inline">←Панель администратора</span>
+            <span class="sm:hidden">←Админ-панель</span>
+        </a>
 
         <div class="mt-8 flex justify-between items-center gap-4 flex-wrap">
             <form method="GET" action="{{ route('admin.questions.index') }}" class="flex gap-2 max-w-md flex-1">

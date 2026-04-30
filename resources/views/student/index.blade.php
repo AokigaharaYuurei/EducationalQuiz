@@ -1,22 +1,27 @@
 <x-app-layout>
     <main class="flex-1 w-full transition-opacity opacity-100 duration-750 starting:opacity-0">
-        <div class="flex w-full justify-center">
-            <div class="dark:bg-[#E7E9EF] rounded-3xl w-[1400px] bg-[#2A2A2A] h-[348px]">
-                <p class="text-[32px] dark:text-[#303030] text-[#FFFFFF] font-bold mt-[100px] justify-center flex">
-                    Добро пожаловать в образовательную викторину!<br>
-                    Интерактивная платформа для проверки знаний<br>по различным предметам.
-                </p>
-            </div>
-            <div class="hidden lg:block absolute ml-[980px] mt-[240px]">
-                <img src="{{asset('img/EllipseFull.png')}}" alt="">
-            </div>
-            <div class="hidden lg:block absolute ml-[-1150px] mt-[20px] w-[97px] h-[113px]">
-                <img src="{{asset('img/point.png')}}" alt="">
-            </div>
-            <div class="hidden lg:block absolute ml-[1100px] mt-[200px] w-[97px] h-[113px]">
-                <img src="{{asset('img/point.png')}}" alt="">
-            </div>
+        <div class="flex w-full justify-center relative px-4 sm:px-6 lg:px-8">
+    <div class="relative dark:bg-[#E7E9EF] bg-[#2A2A2A] rounded-3xl w-full max-w-7xl min-h-[280px] md:min-h-[320px] lg:min-h-[348px] overflow-hidden">
+        
+        <div class="flex items-center justify-center min-h-[280px] md:min-h-[320px] lg:min-h-[348px] py-8 md:py-12 lg:py-16 px-4">
+            <p class="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold dark:text-[#303030] text-[#FFFFFF] leading-tight">
+                Добро пожаловать в образовательную викторину!<br>
+                Интерактивная платформа для проверки знаний<br>по различным предметам.
+            </p>
         </div>
+        <div class="hidden lg:block absolute right-[5%] top-[240px]">
+            <img src="{{asset('img/EllipseFull.png')}}" alt="">
+        </div>
+        
+        <div class="hidden lg:block absolute left-[-30px] top-[20px] w-[97px] h-[113px]">
+            <img src="{{asset('img/point.png')}}" alt="">
+        </div>
+        
+        <div class="hidden lg:block absolute right-[8%] top-[200px] w-[97px] h-[113px]">
+            <img src="{{asset('img/point.png')}}" alt="">
+        </div>
+    </div>
+</div>
 
         <div class="flex w-full justify-center mt-[150px]">
             <div class="w-[1400px] max-w-full px-4">
