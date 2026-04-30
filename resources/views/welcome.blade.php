@@ -51,31 +51,31 @@
     @endif
 </header>
         <main class="flex-1 w-full transition-opacity opacity-100 duration-750 starting:opacity-0">
-            <div class="flex w-full justify-center">
+            <div class="flex w-full justify-center px-4">
                 <div class="bg-[#E7E9EF] rounded-3xl w-[1400px] ">
                     <p class=" text-[52px] text-[#303030] font-bold mt-[42px] ml-[44px]">Добро пожаловать в <br> образовательную викторину!</p>
                     <p class="text-[36px] text-[#303030] font-semibold mt-[21px] ml-[44px]">Интерактивная платформа для <br> <span class="text-[#F7733C]">проверки знаний</span> по <br>различным предметам.</p>
                     @auth
     @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.index') }}" 
-           class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937] inline-flex items-center justify-center">
+           class="w-full max-w-[354px] mx-auto h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937] inline-flex items-center justify-center">
             Панель администратора
         </a>
     @else
-        <a href="{{ route('admin.index') }}"><button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+        <a href="{{ route('admin.index') }}"><button class="w-full mx-auto max-w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
             Выбрать викторину
         </button></a>
     @endif
 @else
-    <a href="{{ route('admin.index') }}"><button class="w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
+    <a href="{{ route('admin.index') }}"><button class="w-full mx-auto max-w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
         Выбрать викторину
     </button></a>
 @endauth
                 </div>
-                <div class="absolute ml-[550px] mt-[40px]">
+                <div class="hidden lg:block absolute ml-[550px] mt-[40px]">
                     <img src="{{asset('img/point.png')}}" alt="">
                 </div>
-                <div class="absolute ml-[1050px] mt-[280px]">
+                <div class="hidden lg:block absolute ml-[1050px] mt-[280px]">
                     <img src="{{asset('img/cercles.png')}}" alt="">
                 </div>
             </div>
@@ -84,7 +84,6 @@
         <p class="text-[32px] mb-[15px] text-[#303030] font-bold dark:text-[#EDEDEC]">Викторины</p>
         <img src="{{asset('img/Line.png')}}" alt="">
         
-        {{-- Сетка карточек --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8 mb-8">
             @foreach($subjects as $subject)
                 <div class="w-full bg-[#E7E9EF] dark:bg-gray-700 rounded-3xl flex flex-col items-center justify-center text-center py-6">
@@ -100,24 +99,31 @@
         <img src="{{asset('img/Line.png')}}" alt="">
     </div>
 </div>
-            <img src="{{asset('img/Ellipse.png')}}" class="absolute ml-[1330px] mt-[30px]" alt="">
+            <img src="{{asset('img/Ellipse.png')}}" class="hidden lg:block absolute ml-[1330px] mt-[30px]" alt="">
             <div class="w-full flex justify-center mt-[148px] mb-[157px]">
-                <img src="{{asset('img/smallpoint.png')}}" class="absolute ml-[-1000px] mt-[30px]" alt="">
+                <img src="{{asset('img/smallpoint.png')}}" class="hidden lg:block absolute ml-[-1000px] mt-[30px]" alt="">
                 <div class="w-[1400px] dark:bg-[#E7E9EF] bg-[#2A2A2A] rounded-3xl">
                     <p class="text-[#FFF] dark:text-[#303030] font-semibold text-[32px] w-full flex justify-center mt-[56px] mb-[56px]">Проходи тесты по категориям: вёрстка, консольное <br> программирование, математика и другие. Получай <br> мгновенную обратную связь: правильные ответы <br> подсвечиваются зелёным, ошибки – красным.  Следи за <br> своей статистикой: сколько тестов пройдено, какие баллы <br> набираешь по каждой теме.</p>
                 </div>
-                <img src="{{asset('img/smallpoint.png')}}" class="absolute ml-[1250px] mt-[150px]" alt="">
+                <img src="{{asset('img/smallpoint.png')}}" class="hidden lg:block absolute ml-[1250px] mt-[150px]" alt="">
             </div>
             </main>
         <div class="dark:bg-[#E7E9EF] bg-[#2A2A2A] w-full">
-       <div class="flex items-center justify-between px-4 py-4">
-    <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
-    <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-    <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
-    <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
-</div>
-        <p class="flex items-center justify-center text-[20px] text-[#9A92AD] py-4">© 2025 Образовательная викторина. Все права защищены</p>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
+        <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
+        <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
+
+        <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+            Выбрать викторину
+        </a>
+        <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+            Рейтинги
+        </a>
     </div>
+    <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
+        © 2025 Образовательная викторина. Все права защищены
+    </p>
+</div>
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>

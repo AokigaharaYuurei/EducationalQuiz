@@ -48,14 +48,21 @@
     </div>
 
     <div class="dark:bg-[#E7E9EF] bg-[#2A2A2A] w-full">
-        <div class="flex items-center justify-between px-4 py-4">
-            <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
-            <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-            <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
-            <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
-        </div>
-        <p class="flex items-center justify-center text-[20px] text-[#9A92AD] py-4">© 2025 Образовательная викторина. Все права защищены</p>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
+        <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
+        <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
+
+        <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+            Выбрать викторину
+        </a>
+        <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+            Рейтинги
+        </a>
     </div>
+    <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
+        © 2025 Образовательная викторина. Все права защищены
+    </p>
+</div>
 
     <script>
         const questions = @json($questions);
