@@ -7,13 +7,13 @@
                     Интерактивная платформа для проверки знаний<br>по различным предметам.
                 </p>
             </div>
-            <div class="absolute ml-[980px] mt-[240px]">
+            <div class="hidden lg:block absolute ml-[980px] mt-[240px]">
                 <img src="{{asset('img/EllipseFull.png')}}" alt="">
             </div>
-            <div class="absolute ml-[-1150px] mt-[20px] w-[97px] h-[113px]">
+            <div class="hidden lg:block absolute ml-[-1150px] mt-[20px] w-[97px] h-[113px]">
                 <img src="{{asset('img/point.png')}}" alt="">
             </div>
-            <div class="absolute ml-[1100px] mt-[200px] w-[97px] h-[113px]">
+            <div class="hidden lg:block absolute ml-[1100px] mt-[200px] w-[97px] h-[113px]">
                 <img src="{{asset('img/point.png')}}" alt="">
             </div>
         </div>

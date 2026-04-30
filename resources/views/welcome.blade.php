@@ -52,30 +52,39 @@
 </header>
         <main class="flex-1 w-full transition-opacity opacity-100 duration-750 starting:opacity-0">
             <div class="flex w-full justify-center px-4">
-                <div class="bg-[#E7E9EF] rounded-3xl w-[1400px] ">
-                    <p class=" text-[52px] text-[#303030] font-bold mt-[42px] ml-[44px]">Добро пожаловать в <br> образовательную викторину!</p>
-                    <p class="text-[36px] text-[#303030] font-semibold mt-[21px] ml-[44px]">Интерактивная платформа для <br> <span class="text-[#F7733C]">проверки знаний</span> по <br>различным предметам.</p>
-                    @auth
+    <div class="bg-[#E7E9EF] rounded-3xl w-full max-w-[1400px] mx-auto py-6 md:py-8 lg:py-10">
+        <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#303030] font-bold ml-4 md:ml-6 lg:ml-8">
+            Добро пожаловать в <br class="hidden sm:block"> образовательную викторину!
+        </p>
+        <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#303030] font-semibold mt-4 sm:mt-6 ml-4 md:ml-6 lg:ml-8">
+            Интерактивная платформа для <br> <span class="text-[#F7733C]">проверки знаний</span> по <br>различным предметам.
+        </p>
+
+       @auth
     @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.index') }}" 
-           class="w-full max-w-[354px] mx-auto h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937] inline-flex items-center justify-center">
+           class="w-full max-w-[354px] mx-auto h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-0 sm:mt-[50px] mb-0 sm:mb-[44px] ml-0 sm:ml-[44px] text-[16px] sm:text-[28px] text-[#FFF] hover:bg-[#df6937] inline-flex items-center justify-center whitespace-normal text-center px-1 leading-tight">
             Панель администратора
         </a>
     @else
-        <a href="{{ route('admin.index') }}"><button class="w-full mx-auto max-w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
-            Выбрать викторину
-        </button></a>
+        <a href="{{ route('admin.index') }}">
+            <button class="w-full max-w-[354px] mx-auto h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-0 sm:mt-[50px] mb-0 sm:mb-[44px] ml-0 sm:ml-[44px] text-[16px] sm:text-[28px] text-[#FFF] hover:bg-[#df6937] whitespace-normal text-center px-1 leading-tight flex items-center justify-center">
+                Выбрать викторину
+            </button>
+        </a>
     @endif
 @else
-    <a href="{{ route('admin.index') }}"><button class="w-full mx-auto max-w-[354px] h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-[50px] mb-[44px] ml-[44px] text-[28px] text-[#FFF] hover:bg-[#df6937]">
-        Выбрать викторину
-    </button></a>
+    <a href="{{ route('admin.index') }}">
+        <button class="w-full max-w-[354px] mx-auto h-[86px] bg-[#F7733C] font-bold rounded-3xl mt-0 sm:mt-[50px] mb-0 sm:mb-[44px] ml-0 sm:ml-[44px] text-[16px] sm:text-[28px] text-[#FFF] hover:bg-[#df6937] whitespace-normal text-center px-1 leading-tight flex items-center justify-center">
+            Выбрать викторину
+        </button>
+    </a>
 @endauth
-                </div>
-                <div class="hidden lg:block absolute ml-[550px] mt-[40px]">
+    </div>
+                <div class="hidden lg:block absolute ml-[570px] mt-[40px]">
                     <img src="{{asset('img/point.png')}}" alt="">
                 </div>
-                <div class="hidden lg:block absolute ml-[1050px] mt-[280px]">
+                <div class="hidden lg:block absolute ml-[1050px] mt-[220px]">
                     <img src="{{asset('img/cercles.png')}}" alt="">
                 </div>
             </div>
@@ -102,8 +111,8 @@
             <img src="{{asset('img/Ellipse.png')}}" class="hidden lg:block absolute ml-[1330px] mt-[30px]" alt="">
             <div class="w-full flex justify-center mt-[148px] mb-[157px]">
                 <img src="{{asset('img/smallpoint.png')}}" class="hidden lg:block absolute ml-[-1000px] mt-[30px]" alt="">
-                <div class="w-[1400px] dark:bg-[#E7E9EF] bg-[#2A2A2A] rounded-3xl">
-                    <p class="text-[#FFF] dark:text-[#303030] font-semibold text-[32px] w-full flex justify-center mt-[56px] mb-[56px]">Проходи тесты по категориям: вёрстка, консольное <br> программирование, математика и другие. Получай <br> мгновенную обратную связь: правильные ответы <br> подсвечиваются зелёным, ошибки – красным.  Следи за <br> своей статистикой: сколько тестов пройдено, какие баллы <br> набираешь по каждой теме.</p>
+                <div class="w-full max-w-[1400px] dark:bg-[#E7E9EF] bg-[#2A2A2A] rounded-3xl p-6 md:p-8 lg:p-12">
+                    <p class="text-[#FFF] dark:text-[#303030] font-semibold text-[32px] w-full flex justify-center mt-[56px] mb-[56px] text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl leading-relaxed">Проходи тесты по категориям: вёрстка, консольное <br> программирование, математика и другие. Получай <br> мгновенную обратную связь: правильные ответы <br> подсвечиваются зелёным, ошибки – красным.  Следи за <br> своей статистикой: сколько тестов пройдено, какие баллы <br> набираешь по каждой теме.</p>
                 </div>
                 <img src="{{asset('img/smallpoint.png')}}" class="hidden lg:block absolute ml-[1250px] mt-[150px]" alt="">
             </div>
