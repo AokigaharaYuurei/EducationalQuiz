@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="py-12">
+    <div class="wflex flex-col min-h-screen py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden border-[#2A2A2A] dark:border-[#fff] border-2 shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-[#000] overflow-hidden border-[#2A2A2A] dark:border-[#fff] border-2 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <div class="flex justify-between items-center border-b pb-4 mb-6">
@@ -51,8 +51,8 @@
         <div class="flex items-center justify-between px-4 py-4">
             <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
             <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-            <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
-            <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
+            <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
+            <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
         </div>
         <p class="flex items-center justify-center text-[20px] text-[#9A92AD] py-4">© 2025 Образовательная викторина. Все права защищены</p>
     </div>
@@ -64,7 +64,7 @@
         let currentStep = 0;    
         let userAnswers = new Array(totalQuestions).fill(null);
         let timerInterval = null;
-        let timeLeft = 20;
+        let timeLeft = 30;
         let gameActive = true;
 
         const currentQuestionDiv = document.getElementById('current-question');
@@ -142,7 +142,7 @@
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
             if (!gameActive) return;
-            timeLeft = 20;
+            timeLeft = 30;
             updateTimerDisplay();
             timerInterval = setInterval(() => {
                 if (!gameActive) return;

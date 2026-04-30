@@ -9,9 +9,13 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\RatingController;
+use App\Models\Subject;
 
 Route::get('/', function () {
-    return view('welcome')->with('success', 'User created successfully!');
+    $subjects = Subject::all(); 
+    return view('welcome', compact('subjects'));
 })->name('welcome');
 
 Route::get('/dashboard', function () {
@@ -29,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/quiz/{subjectId}', [QuizController::class, 'start'])->name('quiz.start');
     Route::post('/quiz/{subjectId}', [QuizController::class, 'submit'])->name('quiz.submit');
     Route::get('/quiz/result/{attemptId}', [QuizController::class, 'result'])->name('quiz.result');
+    Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
 });
 Route::middleware((Admin::class))->group(function () {
     Route::get(
@@ -51,6 +56,8 @@ Route::middleware((Admin::class))->group(function () {
     Route::get('/admin/questions/{question}/edit', [QuestionController::class, 'edit'])->name('admin.questions.edit');
     Route::put('/admin/questions/{question}', [QuestionController::class, 'update'])->name('admin.questions.update');
     Route::delete('/admin/questions/{question}', [QuestionController::class, 'destroy'])->name('admin.questions.destroy');
+    Route::get('/admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
+Route::get('/admin/statistics/export', [StatisticsController::class, 'export'])->name('admin.statistics.export');
 });
 
 require __DIR__ . '/auth.php';

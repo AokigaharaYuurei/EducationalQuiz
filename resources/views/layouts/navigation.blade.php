@@ -16,7 +16,7 @@
                     <a href=" {{route('student.index')}}" class="text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
                         Викторины
                     </a>
-                    <a href="" class=" ml-[40px] text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
+                    <a href="{{ route('rating.index') }}" class=" ml-[40px] text-[20px] text-gray-700 dark:text-gray-300 hover:text-[#E84400] dark:hover:text-[#E84400] transition hover:underline">
                         Рейтинги
                     </a>
                 </div>

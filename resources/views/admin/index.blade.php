@@ -11,7 +11,9 @@
             <a href="{{ route('admin.questions.index') }}" class="w-[300px] bg-[#E84400] rounded-3xl h-[200px] hover:bg-[#df6937] flex items-center justify-center text-center">
                 Справочник вопросов
             </a>
-            <button class="w-[300px] bg-[#E84400] rounded-3xl h-[200px] hover:bg-[#df6937]">Форма статистики</button>
+            <a href="{{ route('admin.statistics') }}" class="w-[300px] bg-[#E84400] rounded-3xl h-[200px] hover:bg-[#df6937] flex items-center justify-center text-center">
+                Форма статистики
+            </a>
         </div>
     </div>
 </x-app-layout>

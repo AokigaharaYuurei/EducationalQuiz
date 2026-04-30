@@ -33,7 +33,7 @@
 
     <div class="flex gap-10">
         <a href="{{route('student.index')}}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Викторины</a>
-        <a href="" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Рейтинги</a>
+        <a href="{{ route('rating.index') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Рейтинги</a>
     </div>
 
     @if (Route::has('login'))
@@ -80,16 +80,26 @@
                 </div>
             </div>
             <div class="mt-[80px] w-full flex justify-center">
-                <div>
-                    <p class="text-[32px] mb-[15px] text-[#303030] font-bold dark:text-[#EDEDEC]">Викторины</p>
-                    <img src="{{asset('img/Line.png')}}" alt="">
-                    <div class="w-[417px] h-[261px] bg-[#E7E9EF] rounded-3xl flex-col items-center justify-center text-center mt-[38px] mb-[38px]">
-                        <p class="text-[#000000] font-bold text-[24px] pt-[112px]">Английский язык</p>
-                        <button class="bg-[#F7733C] hover:bg-[#df6937] text-[20px] text-[#FFF] font-bold w-[251px] h-[56px] rounded-3xl mt-[29px]">Перейти</button>
-                    </div>
-                    <img src="{{asset('img/Line.png')}}" alt="">
+    <div class="w-full max-w-[1400px] px-4">
+        <p class="text-[32px] mb-[15px] text-[#303030] font-bold dark:text-[#EDEDEC]">Викторины</p>
+        <img src="{{asset('img/Line.png')}}" alt="">
+        
+        {{-- Сетка карточек --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8 mb-8">
+            @foreach($subjects as $subject)
+                <div class="w-full bg-[#E7E9EF] dark:bg-gray-700 rounded-3xl flex flex-col items-center justify-center text-center py-6">
+                    <p class="text-[#000000] dark:text-white font-bold text-[24px]">{{ $subject->name }}</p>
+                    <a href="{{ route('quiz.start', $subject->id) }}" 
+                       class="bg-[#F7733C] hover:bg-[#df6937] text-[20px] text-[#FFF] font-bold w-[251px] h-[56px] rounded-3xl mt-[29px] inline-flex items-center justify-center">
+                        Перейти
+                    </a>
                 </div>
-            </div>
+            @endforeach
+        </div>
+        
+        <img src="{{asset('img/Line.png')}}" alt="">
+    </div>
+</div>
             <img src="{{asset('img/Ellipse.png')}}" class="absolute ml-[1330px] mt-[30px]" alt="">
             <div class="w-full flex justify-center mt-[148px] mb-[157px]">
                 <img src="{{asset('img/smallpoint.png')}}" class="absolute ml-[-1000px] mt-[30px]" alt="">
@@ -103,8 +113,8 @@
        <div class="flex items-center justify-between px-4 py-4">
     <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
     <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-    <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
-    <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
+    <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
+    <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
 </div>
         <p class="flex items-center justify-center text-[20px] text-[#9A92AD] py-4">© 2025 Образовательная викторина. Все права защищены</p>
     </div>

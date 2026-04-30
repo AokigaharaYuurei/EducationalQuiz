@@ -28,20 +28,20 @@
                     <p class="text-[20px] mb-[15px] text-[#303030] font-bold dark:text-[#EDEDEC] mt-[30px]">
                         Общее количество пройденных викторин: {{ $totalQuizzes }}
                     </p>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto rounded">
                         @if(count($tableData) > 0)
-                        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600">
+                        <table class="w-full border-collapse border-gray-300 dark:border-gray-600 border-2">
                             <thead>
                                 <tr class="bg-[#E84400] text-white">
-                                    <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Категория</th>
-                                    <th class="border border-gray-300 dark:border-gray-600 px-4 py-2">Средний процент правильных ответов</th>
+                                    <th class=" border-gray-300 dark:border-gray-600 px-4 py-2 border-2">Категория</th>
+                                    <th class=" border-gray-300 dark:border-gray-600 px-4 py-2 border-2">Средний процент правильных ответов</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($tableData as $row)
-                                <tr class="bg-white dark:bg-gray-800">
-                                    <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $row['category'] }}</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $row['avg_percentage'] }}%</td>
+                                <tr class="bg-white dark:bg-[#000]">
+                                    <td class="border-2 border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $row['category'] }}</td>
+                                    <td class="border-2 border-gray-300 dark:border-gray-600 dark:text-white px-4 py-2">{{ $row['avg_percentage'] }}%</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -59,7 +59,7 @@
                     </p>
                     <form id="quiz-form" class="flex flex-col items-center gap-4">
                         <select name="subject_id" id="subject_select" required
-                            class="w-full max-w-md px-4 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white bg-[#E7E9EF] text-[#303030] text-lg">
+                            class="w-full max-w-md px-4 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-[#000] dark:text-white bg-[#E7E9EF] text-[#303030] text-lg">
                             <option value="" class="text-[#303030] font-bold">Выберите категорию</option>
                             @foreach($subjects as $subject)
                             <option value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -77,8 +77,8 @@
         <div class="flex items-center justify-between px-4 py-4">
             <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
             <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-            <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
-            <a href="" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
+            <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Выбрать викторину</a>
+            <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-[28px]">Рейтинги</a>
         </div>
         <p class="flex items-center justify-center text-[20px] text-[#9A92AD] py-4">© 2025 Образовательная викторина. Все права защищены</p>
     </div>
