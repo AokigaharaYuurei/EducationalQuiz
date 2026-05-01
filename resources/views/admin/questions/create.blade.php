@@ -13,7 +13,7 @@
                     <select name="subject_id" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" required>
                         <option value="">Выберите категорию</option>
                         @foreach($subjects as $subject)
-                            <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
+                        <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
                         @endforeach
                     </select>
                     @error('subject_id') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
@@ -35,14 +35,14 @@
                     <label class="block text-gray-700 dark:text-gray-300 mb-2">Варианты ответов</label>
                     <div id="answers-container">
                         @foreach(old('answers', [['text' => '', 'is_correct' => false]]) as $index => $answer)
-                            <div class="answer-group flex gap-2 mb-2 items-start">
-                                <input type="text" name="answers[{{ $index }}][text]" value="{{ $answer['text'] }}" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" required>
-                                <label class="flex items-center gap-1 whitespace-nowrap">
-                                    <input type="checkbox" name="answers[{{ $index }}][is_correct]" value="1" {{ $answer['is_correct'] ? 'checked' : '' }} class="rounded">
-                                    <span class="text-sm dark:text-white">Правильный</span>
-                                </label>
-                                <button type="button" class="remove-answer bg-red-500 text-white px-2 py-1 rounded">✕</button>
-                            </div>
+                        <div class="answer-group flex gap-2 mb-2 items-start">
+                            <input type="text" name="answers[{{ $index }}][text]" value="{{ $answer['text'] }}" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-900 dark:text-white" required>
+                            <label class="flex items-center gap-1 whitespace-nowrap">
+                                <input type="checkbox" name="answers[{{ $index }}][is_correct]" value="1" {{ ($answer['is_correct'] ?? false) ? 'checked' : '' }} class="rounded">
+                                <span class="text-sm text-gray-900 dark:text-white">Правильный</span>
+                            </label>
+                            <button type="button" class="remove-answer bg-red-500 text-white px-2 py-1 rounded">✕</button>
+                        </div>
                         @endforeach
                     </div>
                     <button type="button" id="add-answer" class="mt-2 bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">+ Добавить вариант</button>
@@ -59,24 +59,38 @@
     @push('scripts')
     <script>
         let answerIndex = {{ count(old('answers', [['text' => '', 'is_correct' => false]])) }};
+
         document.getElementById('add-answer').addEventListener('click', function() {
             const container = document.getElementById('answers-container');
             const newDiv = document.createElement('div');
             newDiv.className = 'answer-group flex gap-2 mb-2 items-start';
             newDiv.innerHTML = `
-                <input type="text" name="answers[${answerIndex}][text]" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" required>
+                <input type="text" name="answers[${answerIndex}][text]" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-900 dark:text-white" required>
                 <label class="flex items-center gap-1 whitespace-nowrap">
                     <input type="checkbox" name="answers[${answerIndex}][is_correct]" value="1" class="rounded">
-                    <span class="text-sm">Правильный</span>
+                    <span class="text-sm text-gray-900 dark:text-white">Правильный</span>
                 </label>
                 <button type="button" class="remove-answer bg-red-500 text-white px-2 py-1 rounded">✕</button>
             `;
             container.appendChild(newDiv);
             answerIndex++;
         });
+
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-answer')) {
                 e.target.closest('.answer-group').remove();
+            }
+        });
+
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            const checkboxes = document.querySelectorAll('input[name$="[is_correct]"]');
+            let atLeastOneChecked = false;
+            checkboxes.forEach(cb => {
+                if (cb.checked) atLeastOneChecked = true;
+            });
+            if (!atLeastOneChecked) {
+                alert('Пожалуйста, отметьте хотя бы один правильный ответ');
+                e.preventDefault();
             }
         });
     </script>

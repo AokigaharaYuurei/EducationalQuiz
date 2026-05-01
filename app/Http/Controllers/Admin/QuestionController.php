@@ -13,12 +13,9 @@ class QuestionController extends Controller
     {
         $search = $request->input('search');
         $questions = Question::with('subject', 'answers')
-            ->when($search, function ($query, $search) {
-                return $query->where('question_text', 'like', "%{$search}%");
-            })
+            ->when($search, fn($q) => $q->where('question_text', 'like', "%{$search}%"))
             ->latest()
             ->paginate(15);
-
         return view('admin.questions.index', compact('questions', 'search'));
     }
 
@@ -37,7 +34,14 @@ class QuestionController extends Controller
             'answers' => 'required|array|min:2',
             'answers.*.text' => 'required|string',
             'answers.*.is_correct' => 'nullable|boolean',
+        ], [
+            'answers.min' => 'Добавьте минимум два варианта ответа',
         ]);
+
+        $hasCorrect = collect($request->answers)->contains(fn($answer) => ($answer['is_correct'] ?? false) == true);
+        if (!$hasCorrect) {
+            return back()->withInput()->withErrors(['answers' => 'Необходимо отметить хотя бы один правильный ответ']);
+        }
 
         $question = Question::create([
             'subject_id' => $request->subject_id,
@@ -74,6 +78,11 @@ class QuestionController extends Controller
             'answers.*.text' => 'required|string',
             'answers.*.is_correct' => 'nullable|boolean',
         ]);
+
+        $hasCorrect = collect($request->answers)->contains(fn($answer) => ($answer['is_correct'] ?? false) == true);
+        if (!$hasCorrect) {
+            return back()->withInput()->withErrors(['answers' => 'Необходимо отметить хотя бы один правильный ответ']);
+        }
 
         $question->update([
             'subject_id' => $request->subject_id,

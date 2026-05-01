@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="mt-[50px] px-4">
-        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition"> 
+        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition">
             <span class="hidden sm:inline">←Панель администратора</span>
             <span class="sm:hidden">←Админ-панель</span>
         </a>
@@ -15,33 +15,34 @@
                 @endif
             </form>
         </div>
-        <div class="mt-8 overflow-x-auto">
-            <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                <thead>
-                    <tr class="bg-[#E84400]">
-                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Название предмета</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($subjects as $subject)
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $subject->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $subject->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                            <a href="{{ route('admin.categories.edit', $subject) }}" class="bg-[#E84400] hover:bg-[#F7733C] text-white px-3 py-1 rounded inline-block">Переименовать</a>
-
-                            <form action="{{ route('admin.categories.destroy', $subject) }}" method="POST" class="inline-block" onsubmit="return confirm('Удалить предмет «{{ $subject->name }}»?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="mt-8 overflow-hidden rounded-lg border-2 border-[#E84400] dark:border-[#E84400]">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white dark:bg-gray-800">
+                    <thead>
+                        <tr class="bg-[#E84400]">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Название предмета</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase">Действия</th>
+                            </td>
+                    </thead>
+                    <tbody>
+                        @foreach($subjects as $subject)
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $subject->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $subject->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                <a href="{{ route('admin.categories.edit', $subject) }}" class="bg-[#E84400] hover:bg-[#F7733C] text-white px-3 py-1 rounded inline-block">Переименовать</a>
+                                <form action="{{ route('admin.categories.destroy', $subject) }}" method="POST" class="inline-block" onsubmit="return confirm('Удалить предмет «{{ $subject->name }}»?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="mt-8 p-4 bg-white dark:bg-gray-700 rounded">

@@ -4,20 +4,18 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h2 class="text-2xl font-bold mb-6 dark:text-white">Рейтинг</h2>
-
-                    {{-- Личный рейтинг --}}
                     <div class="mb-10">
                         <h3 class="text-xl font-semibold mb-3 dark:text-white">Ваши лучшие результаты</h3>
                         @if($personalRating->isNotEmpty())
-                            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+                            <div class="overflow-x-auto rounded-lg border-2 border-[#E84400] dark:border-[#E84400]">
                                 <table class="min-w-full bg-white dark:bg-gray-800">
                                     <thead>
                                         <tr class="bg-[#E84400] text-white">
-                                            <th class="px-4 py-2 border">Категория</th>
-                                            <th class="px-4 py-2 border">Баллы</th>
-                                            <th class="px-4 py-2 border">Макс. баллов</th>
-                                            <th class="px-4 py-2 border">Процент</th>
-                                            <th class="px-4 py-2 border">Дата</th>
+                                            <th class="px-4 py-2 text-left">Категория</th>
+                                            <th class="px-4 py-2 text-left">Баллы</th>
+                                            <th class="px-4 py-2 text-left">Макс. баллов</th>
+                                            <th class="px-4 py-2 text-left">Процент</th>
+                                            <th class="px-4 py-2 text-left">Дата</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -37,20 +35,19 @@
                             <p class="text-gray-500">Вы ещё не прошли ни одной викторины.</p>
                         @endif
                     </div>
-
                     <div>
                         <h3 class="text-xl font-semibold mb-3 dark:text-white">Топ-10 пользователей</h3>
                         @if($globalRating->isNotEmpty())
-                            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+                            <div class="overflow-x-auto rounded-lg border-2 border-[#E84400] dark:border-[#E84400]">
                                 <table class="min-w-full bg-white dark:bg-gray-800">
                                     <thead>
                                         <tr class="bg-[#E84400] text-white">
-                                            <th class="px-4 py-2 border">#</th>
-                                            <th class="px-4 py-2 border">Пользователь</th>
-                                            <th class="px-4 py-2 border">Email</th>
-                                            <th class="px-4 py-2 border">Всего баллов</th>
-                                            <th class="px-4 py-2 border">Пройдено викторин</th>
-                                            <th class="px-4 py-2 border">Средний %</th>
+                                            <th class="px-4 py-2 text-left">#</th>
+                                            <th class="px-4 py-2 text-left">Пользователь</th>
+                                            <th class="px-4 py-2 text-left">Email</th>
+                                            <th class="px-4 py-2 text-left">Всего баллов</th>
+                                            <th class="px-4 py-2 text-left">Пройдено викторин</th>
+                                            <th class="px-4 py-2 text-left">Средний %</th>
                                         </tr>
                                     </thead>
                                     <tbody>

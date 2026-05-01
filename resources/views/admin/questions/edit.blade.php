@@ -37,7 +37,7 @@
                                 <input type="hidden" name="answers[{{ $index }}][id]" value="{{ $answer->id }}">
                                 <label class="flex items-center gap-1 whitespace-nowrap">
                                     <input type="checkbox" name="answers[{{ $index }}][is_correct]" value="1" {{ $answer->is_correct ? 'checked' : '' }} class="rounded">
-                                    <span class="text-sm">Правильный</span>
+                                    <span class="text-sm text-gray-900 dark:text-white">Правильный</span>
                                 </label>
                                 <button type="button" class="remove-answer bg-red-500 text-white px-2 py-1 rounded">✕</button>
                             </div>

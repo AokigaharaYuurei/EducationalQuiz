@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="mt-[50px] px-4">
-        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition"> 
+        <a href="{{ route('admin.index') }}" class="text-[#000] dark:text-[#fff] text-[25px] ml-[30px] hover:text-[#E84400] hover:underline transition">
             <span class="hidden sm:inline">←Панель администратора</span>
             <span class="sm:hidden">←Админ-панель</span>
         </a>
@@ -15,8 +15,8 @@
                 @endif
             </form>
         </div>
-        <div class="mt-8 overflow-x-auto">
-            <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+        <div class="mt-8 overflow-x-auto border-2 border-[#E84400] dark:border-[#E84400] rounded-lg">
+            <table class="min-w-full bg-white dark:bg-gray-800">
                 <thead>
                     <tr class="bg-[#E84400]">
                         <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">ID</th>

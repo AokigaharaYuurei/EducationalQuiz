@@ -128,10 +128,28 @@
         <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
         <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
 
-        <a href="{{ route('login') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-            Выбрать викторину
-        </a>
-        <a href="{{ route('rating.index') }}" class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+        {{-- Ссылка, меняющаяся в зависимости от роли --}}
+        @auth
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ route('admin.index') }}" 
+                   class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                    Панель администратора
+                </a>
+            @else
+                <a href="{{ route('student.index') }}" 
+                   class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                    Выбрать викторину
+                </a>
+            @endif
+        @else
+            <a href="{{ route('login') }}" 
+               class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Выбрать викторину
+            </a>
+        @endauth
+
+        <a href="{{ route('rating.index') }}" 
+           class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
             Рейтинги
         </a>
     </div>
