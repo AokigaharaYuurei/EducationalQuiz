@@ -1,4 +1,5 @@
 <x-guest-layout>
+    @push('scripts')
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -73,4 +74,41 @@
             </x-primary-button>
         </div>
     </form>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const telInput = document.getElementById('tel');
+        if (!telInput) return;
+
+        telInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+
+            if (value.length > 0 && value[0] === '8') {
+                value = '7' + value.slice(1);
+            } else if (value.length > 0 && value[0] === '9' && value.length === 10) {
+                value = '7' + value;
+            }
+
+            if (value.length > 11) value = value.slice(0, 11);
+
+            const countryCode = value.length > 0 ? '+7' : '';
+            let formatted = countryCode;
+
+            if (value.length > 1) formatted += ' (' + value.slice(1, 4);
+            if (value.length > 4) formatted += ') ' + value.slice(4, 7);
+            if (value.length > 7) formatted += '-' + value.slice(7, 9);
+            if (value.length > 9) formatted += '-' + value.slice(9, 11);
+
+            if (value.length === 0) formatted = '';
+
+            e.target.value = formatted;
+        });
+
+        telInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.value === '+7 (') {
+                this.value = '';
+                e.preventDefault();
+            }
+        });
+    });
+</script>
 </x-guest-layout>
