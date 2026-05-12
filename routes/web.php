@@ -58,6 +58,9 @@ Route::middleware((Admin::class))->group(function () {
     Route::delete('/admin/questions/{question}', [QuestionController::class, 'destroy'])->name('admin.questions.destroy');
     Route::get('/admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics');
     Route::get('/admin/statistics/export', [StatisticsController::class, 'export'])->name('admin.statistics.export');
+    Route::patch('/admin/users/{id}/restore', [UserController::class, 'restore'])->name('admin.users.restore');
+    Route::patch('/admin/categories/{id}/restore', [CategoryController::class, 'restore'])->name('admin.categories.restore');
+    Route::patch('/admin/questions/{id}/restore', [QuestionController::class, 'restore'])->name('admin.questions.restore');
 });
 
 require __DIR__ . '/auth.php';

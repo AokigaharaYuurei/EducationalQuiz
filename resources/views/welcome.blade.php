@@ -26,10 +26,10 @@
      
     <header class="w-full flex items-center justify-between flex-wrap gap-4 px-8 text-sm">
     <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo /> 
-                    </a>
-                </div>
+        <a href="{{ route('dashboard') }}">
+            <x-application-logo /> 
+        </a>
+    </div>
 
     <div class="flex gap-10">
         <a href="{{route('student.index')}}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition hover:underline">Викторины</a>
@@ -38,21 +38,30 @@
 
     @if (Route::has('login'))
         <div class="flex items-center gap-2">
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" aria-label="Переключить тему">
+                <svg id="theme-icon-sun" class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                </svg>
+                <svg id="theme-icon-moon" class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+
             @auth
-    @if(auth()->user()->role === 'admin')
-        <a href="{{ route('admin.index') }}" class="px-4 py-1.5 dark:text-[#fff] hover:text-[#747474] transition">
-            Панель администратора
-        </a>
-    @else
-        <a href="{{ route('student.index') }}" class="px-4 py-1.5  dark:text-[#fff] hover:text-[#747474] transition">
-            Страница ученика
-        </a>
-    @endif
-@else
-    <a href="{{ route('login') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Вход</a>
-    <span class="text-[#000000] dark:text-[#EDEDEC]">|</span>
-    <a href="{{ route('register') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Регистрация</a>
-@endauth
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.index') }}" class="sm:text-lg px-4 py-1.5 dark:text-[#fff] hover:text-[#747474] transition">
+                        Панель администратора
+                    </a>
+                @else
+                    <a href="{{ route('student.index') }}" class="sm:text-lg px-4 py-1.5 dark:text-[#fff] hover:text-[#747474] transition">
+                        Страница ученика
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('login') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Вход</a>
+                <span class="text-[#000000] dark:text-[#EDEDEC]">|</span>
+                <a href="{{ route('register') }}" class="text-[20px] hover:text-[#E84400] dark:text-[#EDEDEC] transition">Регистрация</a>
+            @endauth
         </div>
     @endif
 </header>
@@ -127,8 +136,6 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
         <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
         <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-
-        {{-- Ссылка, меняющаяся в зависимости от роли --}}
         @auth
             @if(auth()->user()->role === 'admin')
                 <a href="{{ route('admin.index') }}" 
@@ -154,12 +161,48 @@
         </a>
     </div>
     <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
-        © 2025 Образовательная викторина. Все права защищены
+        © 2026 Образовательная викторина. Все права защищены
     </p>
 </div>
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.classList.add('dark');
+                if (sunIcon) sunIcon.classList.add('hidden');
+                if (moonIcon) moonIcon.classList.remove('hidden');
+            } else {
+                html.classList.remove('dark');
+                if (sunIcon) sunIcon.classList.remove('hidden');
+                if (moonIcon) moonIcon.classList.add('hidden');
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark ? 'dark' : 'light');
+        }
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = html.classList.contains('dark');
+                setTheme(isDark ? 'light' : 'dark');
+            });
+        }
+    });
+</script>
     </body>
 </html>

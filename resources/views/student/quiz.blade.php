@@ -51,8 +51,6 @@
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
         <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
         <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-
-        {{-- Ссылка, меняющаяся в зависимости от роли --}}
         @auth
             @if(auth()->user()->role === 'admin')
                 <a href="{{ route('admin.index') }}" 
@@ -78,7 +76,7 @@
         </a>
     </div>
     <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
-        © 2025 Образовательная викторина. Все права защищены
+        © 2026 Образовательная викторина. Все права защищены
     </p>
 </div>
 

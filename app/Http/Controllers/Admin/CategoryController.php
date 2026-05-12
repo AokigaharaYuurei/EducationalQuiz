@@ -9,15 +9,20 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->input('search');
-    
-    $subjects = Subject::when($search, function ($query, $search) {
-        return $query->where('name', 'like', "%{$search}%");
-    })->get(); 
-    
-    return view('admin.categories', compact('subjects', 'search'));
-}
+    {
+        $search = $request->input('search');
+        $withTrashed = $request->boolean('with_trashed');
+
+        $subjects = Subject::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->when($withTrashed, fn($q) => $q->withTrashed())
+            ->orderBy('id')
+            ->get();
+
+        return view('admin.categories', compact('subjects', 'search', 'withTrashed'));
+    }
 
     public function store(Request $request)
     {
@@ -53,5 +58,12 @@ class CategoryController extends Controller
         $subject->delete();
         return redirect()->route('admin.categories')
             ->with('success', 'Предмет удалён.');
+    }
+
+    public function restore($id)
+    {
+        $category = Subject::withTrashed()->findOrFail($id);
+        $category->restore();
+        return back()->with('success', 'Категория восстановлена.');
     }
 }

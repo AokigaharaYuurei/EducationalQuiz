@@ -12,11 +12,15 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $withTrashed = $request->boolean('with_trashed');
+
         $questions = Question::with('subject', 'answers')
             ->when($search, fn($q) => $q->where('question_text', 'like', "%{$search}%"))
+            ->when($withTrashed, fn($q) => $q->withTrashed())
             ->latest()
             ->paginate(15);
-        return view('admin.questions.index', compact('questions', 'search'));
+
+        return view('admin.questions.index', compact('questions', 'search', 'withTrashed'));
     }
 
     public function create()
@@ -120,5 +124,12 @@ class QuestionController extends Controller
         $question->delete();
         return redirect()->route('admin.questions.index')
             ->with('success', 'Вопрос удалён.');
+    }
+
+    public function restore($id)
+    {
+        $question = Question::withTrashed()->findOrFail($id);
+        $question->restore();
+        return back()->with('success', 'Вопрос восстановлен.');
     }
 }

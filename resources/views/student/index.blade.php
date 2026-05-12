@@ -105,7 +105,7 @@
             </a>
         </div>
         <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
-            © 2025 Образовательная викторина. Все права защищены
+            © 2026 Образовательная викторина. Все права защищены
         </p>
     </div>
     <script>
