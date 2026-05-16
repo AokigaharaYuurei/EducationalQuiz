@@ -5,7 +5,7 @@
         <div class="max-w-3xl mx-auto mt-8 bg-white dark:bg-gray-800 p-6 rounded shadow">
             <h2 class="text-2xl font-bold mb-6 dark:text-white">Добавление вопроса</h2>
 
-            <form action="{{ route('admin.questions.store') }}" method="POST" id="questionForm">
+            <form action="{{ route('admin.questions.store') }}" method="POST" id="questionForm" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
@@ -26,6 +26,11 @@
                 </div>
 
                 <div class="mb-4">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Изображение для вопроса (необязательно)</label>
+                    <input type="file" name="image" accept="image/*" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                </div>
+
+                <div class="mb-4">
                     <label class="block text-gray-700 dark:text-gray-300 mb-2">Количество баллов</label>
                     <input type="number" name="points" value="{{ old('points', 1) }}" min="1" class="w-32 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" required>
                     @error('points') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
@@ -35,8 +40,9 @@
                     <label class="block text-gray-700 dark:text-gray-300 mb-2">Варианты ответов</label>
                     <div id="answers-container">
                         @foreach(old('answers', [['text' => '', 'is_correct' => false]]) as $index => $answer)
-                        <div class="answer-group flex gap-2 mb-2 items-start">
+                        <div class="answer-group flex flex-wrap gap-2 mb-3 items-center">
                             <input type="text" name="answers[{{ $index }}][text]" value="{{ $answer['text'] }}" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-900 dark:text-white" required>
+                            <input type="file" name="answers[{{ $index }}][image]" accept="image/*" class="text-sm rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700">
                             <label class="flex items-center gap-1 whitespace-nowrap">
                                 <input type="checkbox" name="answers[{{ $index }}][is_correct]" value="1" {{ ($answer['is_correct'] ?? false) ? 'checked' : '' }} class="rounded">
                                 <span class="text-sm text-gray-900 dark:text-white">Правильный</span>
@@ -63,9 +69,10 @@
         document.getElementById('add-answer').addEventListener('click', function() {
             const container = document.getElementById('answers-container');
             const newDiv = document.createElement('div');
-            newDiv.className = 'answer-group flex gap-2 mb-2 items-start';
+            newDiv.className = 'answer-group flex flex-wrap gap-2 mb-3 items-center';
             newDiv.innerHTML = `
                 <input type="text" name="answers[${answerIndex}][text]" placeholder="Текст ответа" class="flex-1 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-900 dark:text-white" required>
+                <input type="file" name="answers[${answerIndex}][image]" accept="image/*" class="text-sm rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700">
                 <label class="flex items-center gap-1 whitespace-nowrap">
                     <input type="checkbox" name="answers[${answerIndex}][is_correct]" value="1" class="rounded">
                     <span class="text-sm text-gray-900 dark:text-white">Правильный</span>

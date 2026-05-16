@@ -43,12 +43,20 @@
                         <tr class="border-b border-gray-200 dark:border-gray-700 {{ $question->trashed() ? 'bg-gray-100 dark:bg-gray-900 opacity-75' : '' }}">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $question->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $question->subject->name ?? '—' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ Str::limit($question->question_text, 80) }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                                @if($question->image)
+                                    <img src="{{ asset('storage/' . $question->image) }}" class="w-10 h-10 object-cover rounded inline-block mr-2 align-middle">
+                                @endif
+                                <span class="align-middle">{{ Str::limit($question->question_text, 80) }}</span>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ $question->points }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
-                                <ul class="list-disc pl-4">
+                                <ul class="list-disc pl-4 space-y-1">
                                     @foreach($question->answers as $answer)
                                     <li class="{{ $answer->is_correct ? 'text-[#F7733C] font-semibold' : '' }}">
+                                        @if($answer->image)
+                                            <img src="{{ asset('storage/' . $answer->image) }}" class="w-6 h-6 object-cover rounded inline-block mr-1 align-middle">
+                                        @endif
                                         {{ $answer->answer_text }}
                                         @if($answer->is_correct) (верный) @endif
                                     </li>
@@ -73,7 +81,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="6" class="text-center py-4 text-gray-500">Вопросы не найдены.</td></tr>
+                        <tr><td colspan="6" class="text-center py-4 text-gray-500">Вопросы не найдены.@{ '' }@
                         @endforelse
                     </tbody>
                 </table>

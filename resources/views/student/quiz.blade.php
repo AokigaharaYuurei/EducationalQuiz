@@ -48,37 +48,37 @@
     </div>
 
     <div class="dark:bg-[#E7E9EF] bg-[#2A2A2A] w-full">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
-        <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
-        <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
-        @auth
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 text-center sm:text-left">
+            <img src="{{ asset('img/Logolight.png') }}" alt="Logo" class="w-auto block dark:hidden">
+            <img src="{{ asset('img/Logodark.png') }}" alt="Logo" class="w-auto hidden dark:block">
+            @auth
             @if(auth()->user()->role === 'admin')
-                <a href="{{ route('admin.index') }}" 
-                   class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-                    Панель администратора
-                </a>
+            <a href="{{ route('admin.index') }}"
+                class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Панель администратора
+            </a>
             @else
-                <a href="{{ route('student.index') }}" 
-                   class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-                    Выбрать викторину
-                </a>
-            @endif
-        @else
-            <a href="{{ route('login') }}" 
-               class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+            <a href="{{ route('student.index') }}"
+                class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
                 Выбрать викторину
             </a>
-        @endauth
+            @endif
+            @else
+            <a href="{{ route('login') }}"
+                class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Выбрать викторину
+            </a>
+            @endauth
 
-        <a href="{{ route('rating.index') }}" 
-           class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
-            Рейтинги
-        </a>
+            <a href="{{ route('rating.index') }}"
+                class="text-[#FFF] dark:text-[#303030] hover:text-[#878786] text-xl sm:text-2xl md:text-3xl transition">
+                Рейтинги
+            </a>
+        </div>
+        <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
+            © 2026 Образовательная викторина. Все права защищены
+        </p>
     </div>
-    <p class="flex items-center justify-center text-base sm:text-lg text-[#9A92AD] py-4 px-2 text-center">
-        © 2026 Образовательная викторина. Все права защищены
-    </p>
-</div>
 
     <script>
         const questions = @json($questions);
@@ -124,6 +124,17 @@
             }
         }
 
+        // Экранирование HTML для безопасности
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
         function renderQuestion() {
             if (!gameActive) return;
             const q = questions[currentStep];
@@ -132,16 +143,23 @@
                 return;
             }
             let html = `<h3 class="text-lg font-semibold mb-4">Вопрос ${currentStep+1} из ${totalQuestions}</h3>`;
-            html += `<p class="mb-4 text-gray-700 dark:text-gray-300">${q.question_text}</p>`;
+            // Изображение вопроса
+            if (q.image) {
+                html += `<img src="/storage/${q.image}" class="max-w-full h-auto my-2 rounded max-h-48 object-contain">`;
+            }
+            html += `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(q.question_text)}</p>`;
             html += `<div class="space-y-2">`;
             q.answers.forEach(answer => {
                 const checked = (userAnswers[currentStep] == answer.id) ? 'checked' : '';
                 html += `
-                    <label class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                        <input type="radio" name="question_radio" value="${answer.id}" ${checked} class="w-4 h-4" data-answer-id="${answer.id}">
-                        <span class="text-gray-800 dark:text-gray-200">${answer.answer_text}</span>
-                    </label>
-                `;
+                <label class="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    <input type="radio" name="question_radio" value="${answer.id}" ${checked} class="w-4 h-4" data-answer-id="${answer.id}">
+                    <div class="flex items-center gap-2">
+                        ${answer.image ? `<img src="/storage/${answer.image}" class="w-10 h-10 object-cover rounded">` : ''}
+                        <span class="text-gray-800 dark:text-gray-200">${escapeHtml(answer.answer_text)}</span>
+                    </div>
+                </label>
+            `;
             });
             html += `</div>`;
             currentQuestionDiv.innerHTML = html;

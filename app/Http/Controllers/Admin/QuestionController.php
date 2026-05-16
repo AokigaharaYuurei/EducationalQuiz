@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
@@ -38,6 +39,8 @@ class QuestionController extends Controller
             'answers' => 'required|array|min:2',
             'answers.*.text' => 'required|string',
             'answers.*.is_correct' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'answers.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'answers.min' => 'Добавьте минимум два варианта ответа',
         ]);
@@ -47,17 +50,27 @@ class QuestionController extends Controller
             return back()->withInput()->withErrors(['answers' => 'Необходимо отметить хотя бы один правильный ответ']);
         }
 
-        $question = Question::create([
+        $questionData = [
             'subject_id' => $request->subject_id,
             'question_text' => $request->question_text,
             'points' => $request->points,
-        ]);
+        ];
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('questions', 'public');
+            $questionData['image'] = $path;
+        }
+        $question = Question::create($questionData);
 
         foreach ($request->answers as $answerData) {
-            $question->answers()->create([
+            $answerItem = [
                 'answer_text' => $answerData['text'],
                 'is_correct' => $answerData['is_correct'] ?? false,
-            ]);
+            ];
+            if (isset($answerData['image']) && $answerData['image'] instanceof \Illuminate\Http\UploadedFile) {
+                $path = $answerData['image']->store('answers', 'public');
+                $answerItem['image'] = $path;
+            }
+            $question->answers()->create($answerItem);
         }
 
         return redirect()->route('admin.questions.index')
@@ -81,6 +94,9 @@ class QuestionController extends Controller
             'answers.*.id' => 'nullable|exists:answers,id',
             'answers.*.text' => 'required|string',
             'answers.*.is_correct' => 'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'answers.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'delete_question_image' => 'nullable|boolean',
         ]);
 
         $hasCorrect = collect($request->answers)->contains(fn($answer) => ($answer['is_correct'] ?? false) == true);
@@ -88,43 +104,88 @@ class QuestionController extends Controller
             return back()->withInput()->withErrors(['answers' => 'Необходимо отметить хотя бы один правильный ответ']);
         }
 
-        $question->update([
+        $questionData = [
             'subject_id' => $request->subject_id,
             'question_text' => $request->question_text,
             'points' => $request->points,
-        ]);
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($question->image) {
+                Storage::disk('public')->delete($question->image);
+            }
+            $path = $request->file('image')->store('questions', 'public');
+            $questionData['image'] = $path;
+        } elseif ($request->input('delete_question_image') == 1 && $question->image) {
+            Storage::disk('public')->delete($question->image);
+            $questionData['image'] = null;
+        }
+
+        $question->update($questionData);
 
         $existingAnswerIds = [];
         foreach ($request->answers as $answerData) {
             if (isset($answerData['id'])) {
                 $answer = $question->answers()->find($answerData['id']);
                 if ($answer) {
-                    $answer->update([
+                    $updateData = [
                         'answer_text' => $answerData['text'],
                         'is_correct' => $answerData['is_correct'] ?? false,
-                    ]);
+                    ];
+                    if (isset($answerData['image']) && $answerData['image'] instanceof \Illuminate\Http\UploadedFile) {
+                        if ($answer->image) {
+                            Storage::disk('public')->delete($answer->image);
+                        }
+                        $path = $answerData['image']->store('answers', 'public');
+                        $updateData['image'] = $path;
+                    } elseif (isset($answerData['delete_image']) && $answerData['delete_image'] == 1) {
+                        if ($answer->image) {
+                            Storage::disk('public')->delete($answer->image);
+                        }
+                        $updateData['image'] = null;
+                    }
+                    $answer->update($updateData);
                     $existingAnswerIds[] = $answer->id;
                 }
             } else {
-                $newAnswer = $question->answers()->create([
+                $newAnswerData = [
                     'answer_text' => $answerData['text'],
                     'is_correct' => $answerData['is_correct'] ?? false,
-                ]);
+                ];
+                if (isset($answerData['image']) && $answerData['image'] instanceof \Illuminate\Http\UploadedFile) {
+                    $path = $answerData['image']->store('answers', 'public');
+                    $newAnswerData['image'] = $path;
+                }
+                $newAnswer = $question->answers()->create($newAnswerData);
                 $existingAnswerIds[] = $newAnswer->id;
             }
         }
-        $question->answers()->whereNotIn('id', $existingAnswerIds)->delete();
+
+        $answersToDelete = $question->answers()->whereNotIn('id', $existingAnswerIds)->get();
+        foreach ($answersToDelete as $answer) {
+            if ($answer->image) {
+                Storage::disk('public')->delete($answer->image);
+            }
+            $answer->delete();
+        }
 
         return redirect()->route('admin.questions.index')
             ->with('success', 'Вопрос обновлён.');
     }
 
     public function destroy(Question $question)
-    {
-        $question->delete();
-        return redirect()->route('admin.questions.index')
-            ->with('success', 'Вопрос удалён.');
+{
+    if ($question->image) {
+        Storage::disk('public')->delete($question->image);
     }
+    foreach ($question->answers as $answer) {
+        if ($answer->image) {
+            Storage::disk('public')->delete($answer->image);
+        }
+    }
+    $question->delete();
+    return redirect()->route('admin.questions.index')->with('success', 'Вопрос удалён.');
+}
 
     public function restore($id)
     {

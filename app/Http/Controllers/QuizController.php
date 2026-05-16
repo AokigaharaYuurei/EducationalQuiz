@@ -7,6 +7,7 @@ use App\Models\Subject;
 use App\Models\Question;
 use App\Models\QuizAttempt;
 
+
 class QuizController extends Controller
 {
     public function start($subjectId)
